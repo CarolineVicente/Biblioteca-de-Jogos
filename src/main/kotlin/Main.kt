@@ -1,7 +1,10 @@
 import categorias.Terror
 import encap.Jogos
+import encap.Usuario
 
 fun main() {
+
+
 
     var listaJogos = listOf(
         Terror("Resident Evil 1 (Biohazard)", 1996, "Capcom", 18, 5),
@@ -19,10 +22,80 @@ fun main() {
         Terror("Bioshock", 2016, "2k", 18, 4)
     )
 
+    var listaUsuario = mutableListOf<Usuario>()
+    var nick = ""
+    var senha = ""
+    var confirmarsenha = ""
+    var idade = 0
+
     println("*** BEM-VINDO!!! ***")
     println("*** Games Factory Reviews ***\n")
 
-    //colocar criar usuario
+
+    while (true) {
+
+        print("Digite seu nome: ")
+        var nome = readln()
+
+        print("Digite seu e-mail: ")
+        var email = readln()
+
+        while (true) {
+
+            print("Digite sua senha: ")
+            senha = readln()
+
+            print("Confirme a sua senha: ")
+            confirmarsenha = readln()
+
+            if (confirmarsenha != senha) {
+                println("As senhas precisam ser iguais! ")
+            } else {
+                break
+            }
+        }
+        while (true) {
+            try {
+                print("Digite a sua idade: ")
+                idade = readln().toInt()
+                break
+            } catch (e: Exception) {
+                println("Valor invalido! Digite novamente!")
+            }
+        }
+
+        while (true) {
+            print("Digite seu nick: ")
+            nick = readln()
+
+            var auxiliar = false
+            listaUsuario.forEach {
+                if (nick == it.nick) {
+                    auxiliar = true
+                }
+            }
+
+            if (auxiliar) {
+                println("Nick ja existente! ")
+            } else {
+                break
+            }
+
+
+        }
+
+        var usuario1 = Usuario(nome, email, senha, confirmarsenha, nick, idade)
+        listaUsuario.add(usuario1)
+
+
+        println("Deseja parar de adicionar usuarios? ")
+        println("1 - Sim // 2 - Não ")
+        var resp = readln().toInt()
+        if(resp == 1){
+            break
+        }
+    }
+
 
 
     while (true) {
@@ -35,8 +108,7 @@ fun main() {
                 "1- Ver o catálogo de Jogos\n" +
                         "2- Ver a descrição do jogo\n" +
                         "3- Avaliar um jogo\n" +
-                        "4- Favoritos\n" +
-                        "5- Sair\n"
+                        "4- Sair\n"
             )
 
             println("Digite a opção que você deseja: ")
@@ -103,7 +175,7 @@ fun main() {
                 }
 
 
-                5 -> break
+                4 -> break
 
             }
         } catch (e: Exception) {
@@ -111,4 +183,5 @@ fun main() {
         }
     }
 }
+
 
