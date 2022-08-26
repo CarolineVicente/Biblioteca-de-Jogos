@@ -1,40 +1,16 @@
 package encap
 
-open class Jogos(
-    private var nomejogo: String,
-    private var anojogo: Int,
-    private var produtora: String,
-    private var classeindicativa: Int,
+abstract class Jogos(
+    var nomejogo: String,
+    var anojogo: Int,
+    var produtora: String,
+    var classeindicativa: Int,
     notaDoJogo: Int
 ) : ReviewJogo(notaDoJogo) {
 
     init {
         checarDados()
     }
-
-    private var _jogos = mutableSetOf<String>()
-    val jogos: Set<String> = _jogos
-    open fun criarJogo() {
-        println("Adicionar um jogo: ")
-        nomejogo = readln()
-        println("Insira o ano de lançamento: ")
-        anojogo = readln().toInt()
-        println("Adicionar a produtora do jogo: ")
-        produtora = readln()
-        println("Informe a classe indicativa: ")
-        classeindicativa = readln().toInt()
-    }
-
-    open fun addSinopse() {
-
-        println("Adicione uma sinopse ao jogo: ")
-        val sinopse = readln()
-    }
-
-    open fun listarJogo() {
-        println(_jogos)
-    }
-
 
     fun checarDados() {
         if (nomejogo == "" || anojogo == null || produtora == "" || classeindicativa == null) {
@@ -43,7 +19,7 @@ open class Jogos(
     }
 
     override fun darNota() {
-
+        
         println("Dar nota de 1 a 5 para o jogo: ")
         println("1 para ruim e 5 para gostei muito")
         var nota = readln().toInt()
@@ -52,31 +28,40 @@ open class Jogos(
 
         if (nota in 1..5) {
             println("Nota cadastrada com sucesso!")
+
         } else {
             println("Valor de $nota inválido! Digite um novo valor.")
         }
+
     }
 
     override fun curtir() {
 
-        var count = 0
+        do {
+            var count = 0
 
-        println("Você curtiu o jogo? ")
-        println("Sim ou Não")
-        val resp = readln()
+            println("Você curtiu o jogo? ")
+            println("Sim ou Não")
+            val resp = readln()
 
+            if (resp == "Sim" || resp == "sim") {
+                count++
+                numCurtidas += count
+                println("Like: $numCurtidas")
 
-        if (resp == "Sim" || resp == "sim") {
-            count++
-            numCurtidas += count
-            println("Like: $numCurtidas")
+            } else if (resp == "Não" || resp == "não") {
+                count++
+                numDislikes += count
+                println("Dislike : $numDislikes")
 
-        } else if (resp == "Não" || resp == "não") {
-            count++
-            numDislikes += count
-            println("Dislike : $numDislikes")
-        } else {
-            println("Resposta inválida!")
-        }
+            } else {
+                println("Resposta inválida!")
+            }
+
+        } while (resp != "Sim" && resp != "sim" && resp != "Não" && resp != "não")
+    }
+
+    override fun toString(): String {
+        return println("Informações do jogo:\nNome: $nomejogo\nAno de Lançamento: $anojogo\nDesenvolvedora: $produtora\nClassificação Indicativa: $classeindicativa\n").toString()
     }
 }
